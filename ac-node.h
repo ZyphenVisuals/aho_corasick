@@ -28,6 +28,8 @@ public:
      */
     [[nodiscard]] ACNode *searchNext(char c) const;
 
+    [[nodiscard]] char getChar() const;
+
     /**
      * Insert a new node with a given character
      * @param c Character for the next node

@@ -17,6 +17,10 @@ ACNode * ACNode::searchNext(const char c) const {
     return nullptr;
 }
 
+char ACNode::getChar() const {
+    return this->c;
+}
+
 ACNode * ACNode::addNext(const char c) {
     auto* node = new ACNode(c);
     this->next.push_back(node);
