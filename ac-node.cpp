@@ -46,3 +46,11 @@ void ACNode::setDictionary(ACNode *dictionary) {
 ACNode * ACNode::getDictionary() const {
     return dictionary;
 }
+
+void ACNode::setOutput(const std::string &output) {
+    this->output = output;
+}
+
+std::string ACNode::getOutput() const {
+    return this->output;
+}

@@ -6,6 +6,7 @@
 #define AC_NODE_H
 
 #include <vector>
+#include <string>
 
 class ACNode {
     char c;
@@ -13,6 +14,8 @@ class ACNode {
     std::vector<ACNode *> next;
     ACNode *failure = nullptr;
     ACNode *dictionary = nullptr;
+
+    std::string output;
 
 public:
     /**
@@ -62,6 +65,10 @@ public:
         * @return Pointer to the dictionary node
         */
     [[nodiscard]] ACNode *getDictionary() const;
+
+    void setOutput(const std::string &output);
+
+    [[nodiscard]] std::string getOutput() const;
 };
 
 #endif //AC_NODE_H
