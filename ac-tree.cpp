@@ -18,7 +18,7 @@ void ACTree::printSubtree(const ACNode *node, const int depth) { // NOLINT(*-no-
     }
     std::cout<<"("<<node->getChar()<<") (failure: " <<node->getFailure()->getChar()<<")";
     if(node->getDictionary() != nullptr ) {
-        std::cout<<" (dictionary: "<<node->getDictionary()->getChar()<<")";
+        std::cout<<" (dictionary output: "<<node->getDictionary()->getOutput()<<")";
     }
     if(!node->getOutput().empty()) {
         std::cout<<" (output: "<<node->getOutput()<<")";
