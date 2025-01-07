@@ -27,6 +27,10 @@ ACNode * ACNode::addNext(const char c) {
     return node;
 }
 
+std::vector<ACNode *> ACNode::getNext() const {
+    return this->next;
+}
+
 void ACNode::setFailure(ACNode *failure) {
     this->failure = failure;
 }

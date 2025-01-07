@@ -37,6 +37,8 @@ public:
      */
     ACNode *addNext(char c);
 
+    [[nodiscard]] std::vector<ACNode *> getNext() const;
+
     /**
      * Set the fail link
      * @param failure Pointer of the failure node
