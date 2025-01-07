@@ -11,11 +11,15 @@ ACTree::ACTree() {
     this->root = rootNode;
 }
 
-void ACTree::printSubtree(const ACNode *node, const int depth) {
+void ACTree::printSubtree(const ACNode *node, const int depth) { // NOLINT(*-no-recursion)
     for(int i = 0; i < depth; i++) {
         std::cout<<"-";
     }
-    std::cout<<"("<<node->getChar()<<")"<<std::endl;
+    std::cout<<"("<<node->getChar()<<")";
+    if(!node->getOutput().empty()) {
+        std::cout<<" ("<<node->getOutput()<<")";
+    }
+    std::cout<<"\n";
     for(const ACNode* nextNode : node->getNext()) {
         printSubtree(nextNode, depth+1);
     }
