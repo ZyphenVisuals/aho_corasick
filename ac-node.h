@@ -5,12 +5,12 @@
 #ifndef AC_NODE_H
 #define AC_NODE_H
 
-#include <list>
+#include <vector>
 
 class ACNode {
     char c;
 
-    std::list<ACNode *> next;
+    std::vector<ACNode *> next;
     ACNode *failure = nullptr;
     ACNode *dictionary = nullptr;
 
