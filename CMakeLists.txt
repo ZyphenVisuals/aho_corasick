@@ -3,4 +3,6 @@ project(aho_corasick)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(aho_corasick main.cpp)
+add_executable(aho_corasick main.cpp
+        ac-node.cpp
+        ac-node.h)
