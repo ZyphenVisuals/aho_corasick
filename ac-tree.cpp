@@ -16,9 +16,12 @@ void ACTree::printSubtree(const ACNode *node, const int depth) { // NOLINT(*-no-
     for(int i = 0; i < depth; i++) {
         std::cout<<"-";
     }
-    std::cout<<"("<<node->getChar()<<")";
+    std::cout<<"("<<node->getChar()<<") (failure: " <<node->getFailure()->getChar()<<")";
+    if(node->getDictionary() != nullptr ) {
+        std::cout<<" (dictionary: "<<node->getDictionary()->getChar()<<")";
+    }
     if(!node->getOutput().empty()) {
-        std::cout<<" ("<<node->getOutput()<<")";
+        std::cout<<" (output: "<<node->getOutput()<<")";
     }
     std::cout<<"\n";
     for(const ACNode* nextNode : node->getNext()) {
@@ -44,9 +47,13 @@ void ACTree::generateFailureLinks(ACNode* node, std::string word) const { // NOL
     // find the failure link of the current node
     ACNode* failureNode = nullptr;
 
+    std::string wordCopy = word;
+
+    if(!word.empty()) word = word.substr(1, word.size() - 1);
+
     while(failureNode == nullptr && !word.empty()) {
         failureNode = this->find(word);
-        word = word.substr(0, word.size()-1);
+        word = word.substr(1, word.size() - 1);
     }
 
     if(word.empty() && failureNode == nullptr) {
@@ -57,7 +64,7 @@ void ACTree::generateFailureLinks(ACNode* node, std::string word) const { // NOL
 
     // recurse
     for(ACNode* nextNode : node->getNext()) {
-        generateFailureLinks(nextNode, word + node->getChar());
+        generateFailureLinks(nextNode, wordCopy + nextNode->getChar());
     }
 }
 

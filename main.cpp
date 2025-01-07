@@ -12,6 +12,7 @@ int main() {
     ac.addWord("gag");
     ac.addWord("gc");
     ac.addWord("gca");
+    ac.generateLinks();
     ac.printTree();
     return 0;
 }
