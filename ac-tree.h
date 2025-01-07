@@ -21,6 +21,11 @@ class ACTree {
 
     static void printSubtree(const ACNode *node, int depth);
 
+    [[nodiscard]] ACNode * find(const std::string & word) const;
+
+    void generateFailureLinks(ACNode *node, std::string word) const;
+    void generateDictionaryLinks() const;
+
 public:
     /**
      * Initialize a new aho-corasick tree 
@@ -36,7 +41,7 @@ public:
     /**
      * Tell the aho-corasick tree to generate all failure and dictionary links
      */
-    void generateLinks();
+    void generateLinks() const;
 
     /**
      * Match all the words in the aho-corasick tree against the given text

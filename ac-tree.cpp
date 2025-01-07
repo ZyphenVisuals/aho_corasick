@@ -5,6 +5,7 @@
 #include "ac-tree.h"
 
 #include <iostream>
+#include <queue>
 
 ACTree::ACTree() {
     auto* rootNode = new ACNode(' ');
@@ -22,6 +23,68 @@ void ACTree::printSubtree(const ACNode *node, const int depth) { // NOLINT(*-no-
     std::cout<<"\n";
     for(const ACNode* nextNode : node->getNext()) {
         printSubtree(nextNode, depth+1);
+    }
+}
+
+ACNode * ACTree::find(const std::string &word) const {
+    ACNode* node = this->root;
+
+    for(const char c : word) {
+        ACNode* nextNode = node->searchNext(c);
+        if(nextNode == nullptr) {
+            return nullptr;
+        }
+        node = nextNode;
+    }
+
+    return node;
+}
+
+void ACTree::generateFailureLinks(ACNode* node, std::string word) const { // NOLINT(*-no-recursion)
+    // find the failure link of the current node
+    ACNode* failureNode = nullptr;
+
+    while(failureNode == nullptr && !word.empty()) {
+        failureNode = this->find(word);
+        word = word.substr(0, word.size()-1);
+    }
+
+    if(word.empty() && failureNode == nullptr) {
+        failureNode = this->root;
+    }
+
+    node->setFailure(failureNode);
+
+    // recurse
+    for(ACNode* nextNode : node->getNext()) {
+        generateFailureLinks(nextNode, word + node->getChar());
+    }
+}
+
+void ACTree::generateDictionaryLinks() const {
+    std::queue<ACNode*> q;
+    q.push(this->root);
+
+    while(!q.empty()) {
+        // get a node from the queue
+        ACNode* node = q.front();
+        q.pop();
+
+        // add its children to the queue
+        for(ACNode* nextNode : node->getNext()) {
+            q.push(nextNode);
+        }
+
+        // find potential output links
+        ACNode* dictionaryNode = node->getFailure();
+
+        while(dictionaryNode->getOutput().empty() && dictionaryNode != this->root) {
+            dictionaryNode = dictionaryNode->getFailure();
+        }
+
+        if(dictionaryNode != this->root) {
+            node->setDictionary(dictionaryNode);
+        }
     }
 }
 
@@ -45,4 +108,9 @@ void ACTree::addWord(const std::string& word) const {
     }
 
     node->setOutput(word);
+}
+
+void ACTree::generateLinks() const {
+    this->generateFailureLinks(this->root, "");
+    this->generateDictionaryLinks();
 }
