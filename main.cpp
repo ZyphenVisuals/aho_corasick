@@ -1,6 +1,17 @@
 #include <iostream>
 
+#include "ac-tree.h"
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    const ACTree ac;
+
+    ac.addWord("a");
+    ac.addWord("ag");
+    ac.addWord("c");
+    ac.addWord("caa");
+    ac.addWord("gag");
+    ac.addWord("gc");
+    ac.addWord("gca");
+    ac.printTree();
     return 0;
 }
