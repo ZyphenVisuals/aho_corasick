@@ -121,3 +121,40 @@ void ACTree::generateLinks() const {
     this->generateFailureLinks(this->root, "");
     this->generateDictionaryLinks();
 }
+
+std::vector<ACMatch> ACTree::match(const std::string& text) const {
+    const ACNode* node = this->root;
+    std::vector<ACMatch> matches;
+
+    int i=0;
+    for(const char c : text) {
+        // make a move
+        ACNode* nextNode = node->searchNext(c);
+
+        while(nextNode == nullptr && node != this->root) {
+            node = node->getFailure();
+            nextNode = node->searchNext(c);
+        }
+
+        if(nextNode != nullptr) {
+            node = nextNode;
+        }
+
+        // check for output
+        if(!node->getOutput().empty()) {
+            matches.push_back(ACMatch(node->getOutput(), i - node->getOutput().length() + 1, i));
+        }
+
+        // check dictionary path
+        const ACNode *ghostNode = node;
+        while(ghostNode->getDictionary() != nullptr) {
+            ghostNode = ghostNode->getDictionary();
+            matches.push_back(ACMatch(ghostNode->getOutput(), i - ghostNode->getOutput().length() + 1, i));
+        }
+
+        // increment counter
+        i++;
+    }
+
+    return matches;
+}

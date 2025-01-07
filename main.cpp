@@ -26,9 +26,9 @@ int main(int argc, char *argv[]) {
     bool debug = false;
 
     // handle flags
-    if(argc > 1) {
-        for(int i = 1; i < argc; i++) {
-            if(strcmp(argv[i], "--debug") == 0 || strcmp(argv[i], "-d") == 0) {
+    if (argc > 1) {
+        for (int i = 1; i < argc; i++) {
+            if (strcmp(argv[i], "--debug") == 0 || strcmp(argv[i], "-d") == 0) {
                 debug = true;
             }
         }
@@ -46,18 +46,22 @@ int main(int argc, char *argv[]) {
     text.assign((std::istreambuf_iterator<char>(file)),
                 (std::istreambuf_iterator<char>()));
     file.close();
-    std::cout<< "Enter the number of patterns: ";
+    std::cout << "Enter the number of patterns: ";
     std::cin >> wordCount;
-    for(int i=0; i<wordCount; i++) {
-        std::cout<< "Enter the pattern " << i+1 << ": ";
+    for (int i = 0; i < wordCount; i++) {
+        std::cout << "Enter the pattern " << i + 1 << ": ";
         std::cin >> word;
         ac.addWord(word);
     }
 
     // aho-corasick stuff
     ac.generateLinks();
-    if(debug) {
+    if (debug) {
         ac.printTree();
+    }
+    for (std::vector<ACMatch> matches = ac.match(text); const ACMatch& match: matches) {
+        std::cout << "Pattern " << match.word << " occurs at positions " << match.start << " ... " << match.end <<
+                std::endl;
     }
     return 0;
 }

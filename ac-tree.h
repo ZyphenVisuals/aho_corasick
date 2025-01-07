@@ -48,7 +48,7 @@ public:
      * @param text Text to search into
      * @return A vector containing all the matches
      */
-    std::vector<ACMatch> match(std::string text);
+    [[nodiscard]] std::vector<ACMatch> match(const std::string& text) const;
 
     /**
      * Prints the tree to the terminal. For debug purposes.
