@@ -50,7 +50,9 @@ int main(int argc, char *argv[]) {
     std::cin >> wordCount;
     for (int i = 0; i < wordCount; i++) {
         std::cout << "Enter the pattern " << i + 1 << ": ";
-        std::cin >> word;
+        std::cin.clear();
+        std::cin.sync();
+        std::getline(std::cin, word);
         ac.addWord(word);
     }
 
