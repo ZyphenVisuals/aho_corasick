@@ -57,8 +57,10 @@ int main(int argc, char *argv[]) {
     // aho-corasick stuff
     ac.generateLinks();
     if (debug) {
+        std::cout << std::endl;
         ac.printTree();
     }
+    std::cout << std::endl;
     for (std::vector<ACMatch> matches = ac.match(text); const ACMatch& match: matches) {
         std::cout << "Pattern " << match.word << " occurs at positions " << match.start << " ... " << match.end <<
                 std::endl;
